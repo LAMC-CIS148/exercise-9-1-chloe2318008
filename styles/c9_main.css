@@ -18,6 +18,7 @@ body {
 a:focus, a:hover {
 	font-style: italic;
 }
+
 /* the styles for the header */
 header {
 	padding: 1.5em 0 2em 0;
@@ -40,17 +41,21 @@ header img {
 .shadow {
 	text-shadow: 2px 2px 2px #800000;
 }
+
 /* the styles for the navigation menu */
 #nav_menu ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	position: relative;
+	display: flex; /* Set to flex container */
+	flex-basis: 100%; /* Occupies 100% of the width */
+	justify-content: space-between; /* Even space between items */
 }
+
 #nav_menu ul li {
-	float: left;
-    width: 20%;                 /* 160 / 800 x 100 */
+	flex-basis: 20%; /* Use flex-basis instead of width */
 }
+
 #nav_menu ul li a {
     display: block;
     text-align: center;
@@ -60,37 +65,49 @@ header img {
     color: white;
     font-weight: bold;
 }
+
 #nav_menu a.current {
 	color: yellow;
 }
+
 #nav_menu ul ul {
 	width: 100%;
     display: none;
     position: absolute;
     top: 100%;
 }
+
 #nav_menu ul ul li {
-	float: none;
+	float: none; /* This is fine, since we're using flex */
 }
+
 #nav_menu ul li:hover > ul {
 	display: block;
 }
+
 #nav_menu > ul::after {
     content: "";
-    clear: both;
-    display: block;
+    clear: both; /* This can be removed as we're not using floats */
 }
+
 /* the styles for the main content */
 main {
-	clear: left;
+	display: flex; /* Set to flex container */
+}
+
+section {
+	flex-basis: 70%; /* Set flex-basis to 70% */
+	padding: 0 2.5% 20px 2.5%; /* Keep the padding */
+	order: 2; /* Set order so section appears after aside */
+}
+
+aside {
+	flex-basis: 30%; /* Set flex-basis to 30% */
+	padding: 0 0 20px 2.5%; /* Keep the padding */
+	order: 1; /* Set order so aside appears before section */
 }
 
 /* the styles for the section */
-section {
-	width: 65.625%;                  /* 525 / 800 X 100 */
-	float: right;
-	padding: 0 2.5% 20px 2.5%;       /* 20 / 800 x 100 */
-}
 section h1 {
 	font-size: 150%;
 	padding: .5em 0 .25em 0;
@@ -130,7 +147,7 @@ article h3 {
 	padding-bottom: .25em;
 }
 article img {
-	float: right;
+	float: right; /* float property retained */
 	max-width: 40%;
 	min-width: 150px;
 	margin: .5em 0 1em 1em;
@@ -139,29 +156,13 @@ article img {
 
 /* the styles for the aside */
 aside {
-	width: 26.875%;                     /* 215 / 800 x 100 */
-	float: right;
-	padding: 0 0 20px 2.5%;             /* 20 / 800 x 100 */
-}
-aside h2 {
-	color: #800000;
-	font-size: 130%;
-	padding: .5em 0 .25em 0;
-}
-
-aside h3 {
-	font-size: 105%;
-	padding-bottom: .25em;
-}
-aside img {
-	padding-bottom: 1em;
+	flex-basis: 30%; /* Set flex-basis to 30% */
+	padding: 0 0 20px 2.5%; /* Keep the padding */
 }
 
 /* the styles for the footer */
 footer {
 	background-color: #931420;
-	clear: both;
-
 }
 footer p {
 	text-align: center;
@@ -174,7 +175,7 @@ footer p {
 
 @media only screen and (max-width: 734px) {
 	section h1 {
-		font-size: 125%
+		font-size: 125%;
 	}
 	section h2, aside h2 {
 		font-size: 110%;
@@ -187,15 +188,22 @@ footer p {
 @media only screen and (max-width: 648px) {
 	header img { float: none; }
 	header { text-align: center; }
+
+	/* Change main to a column layout */
+	main {
+		flex-direction: column; /* Stack items vertically */
+	}
+
 	section {
-		float: none;
-		width: 95%;
+		flex-basis: 100%; /* Full width for section */
+		order: 1; /* Ensure section appears first */
 	}
+
 	aside {
-		float: none;
-		padding-right: 2.5%;
-		width: 95%;
+		flex-basis: 100%; /* Full width for aside */
+		order: 2; /* Ensure aside appears second */
 	}
+
 	article img { max-width: 30%; }
 	#speakers {
 		column-count: 2;
